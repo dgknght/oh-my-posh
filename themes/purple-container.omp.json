@@ -18,6 +18,14 @@
           "template": " \uf49e "
         },
         {
+          "type": "text",
+          "style": "powerline",
+          "powerline_symbol": "\ue0b0",
+          "foreground": "#ffffff",
+          "background": "#9D4EDD",
+          "template": "{{ if .Env.CONTAINER_ID }} {{ .Env.CONTAINER_ID }} {{ end }}"
+        },
+        {
           "type": "session",
           "style": "powerline",
           "powerline_symbol": "\ue0b0",
