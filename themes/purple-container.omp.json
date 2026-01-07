@@ -26,14 +26,6 @@
           "template": "{{ if .Env.CONTAINER_ID }} {{ .Env.CONTAINER_ID }} {{ end }}"
         },
         {
-          "type": "session",
-          "style": "powerline",
-          "powerline_symbol": "\ue0b0",
-          "foreground": "#E0AAFF",
-          "background": "#7B2CBF",
-          "template": " {{ .UserName }}@{{ .HostName }} "
-        },
-        {
           "type": "path",
           "style": "powerline",
           "powerline_symbol": "\ue0b0",
