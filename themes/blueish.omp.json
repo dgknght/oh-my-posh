@@ -34,7 +34,7 @@
           "foreground": "#193549",
           "powerline_symbol": "\ue0b0",
           "style": "powerline",
-          "template": " {{ if not .Error }}{{ .Icon }}{{ .Percentage }}{{ end }}{{ .Error }}\uf295 \ueb2d ",
+          "template": "{{ if not .Error }} {{ .Icon }}{{ .Percentage }}\uf295 \ueb2d {{ end }}",
           "type": "battery"
         },
         {
