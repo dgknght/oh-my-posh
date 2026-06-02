@@ -1,48 +1,67 @@
-# Agent Instructions
+# GitHub Copilot Instructions
 
-## General File Creation Guidelines
+For general coding guidelines, commit conventions, and agent workflows, see [AGENTS.md](../AGENTS.md).
 
-When creating new files:
+## Tech Stack
 
-- **Always use LF (Unix-style) line endings**, not CRLF (Windows-style)
-- This repository uses `.gitattributes` to enforce LF line endings
-- Ensures consistency across all platforms and avoids Git warnings
+| Layer                     | Technology                    |
+| ------------------------- | ----------------------------- |
+| Core engine               | Go (module root: `src/`)      |
+| Documentation site        | Docusaurus (MDX) - `website/` |
+| Themes                    | JSON - `themes/`              |
+| Config format             | TOML / JSON / YAML            |
+| Package/installer scripts | `packages/`                   |
+| Build scripts             | `build/`                      |
 
-## Golang
+## Repository Layout
 
-When editing Go files (`*.go`):
+```text
+src/
+  segments/   # One Go file + one _test.go per segment
+  prompt/     # Core rendering engine
+  runtime/    # OS/shell abstraction layer
+themes/       # Bundled JSON theme files
+website/      # Docusaurus docs site (MDX pages, sidebar config, JSON schema)
+packages/     # Installer/package manifests
+build/        # CI build helpers
+```
 
-- Read `.github/instructions/golang.md` and announce once per task that you are following it.
-- Before committing, ensure code is formatted and linted:
-  - Run `gofmt` (or `go fmt`) and organize imports.
-  - Run `golangci-lint run` at the repository root and address findings.
+## Segment Development
 
-## Markdown
+When adding a new segment, four artifacts are required - use the `segment-create` skill
+to scaffold all of them automatically:
 
-When editing Markdown (`*.md`, `*.mdx`):
+1. `src/segments/<name>.go` - segment implementation
+2. `src/segments/<name>_test.go` - unit tests
+3. `website/docs/segments/<name>.mdx` - user-facing docs
+4. Update `website/sidebars.js` and `website/static/schema.json`
+5. Register the type in `src/config/segment_types.go` via `gob.Register(&segments.MySegment{})` - missing this causes
+  silent failures at runtime
 
-- Read `.github/instructions/markdown.md` and announce once per task that you are following it.
-- Use proper headings (`##`, `###`), fenced code blocks with language, and keep lines within the configured limit.
+See the `segment-docs` skill for the canonical mapping between Go source constructs and MDX
+documentation fields (template properties, type representations, option tables).
+
+## Go Conventions
+
+- Follow the `golang` skill for project-specific Go standards.
+- Each segment implements the `Segment` interface; use `env` (the `Environment` abstraction)
+  for all OS/shell calls - never call OS APIs directly.
+- Test with `go test ./...` from `src/`.
+- Lint with `golangci-lint run` from `src/`.
+
+## Documentation (website/)
+
+- Follow the `markdown` skill for `.md`/`.mdx` formatting rules.
+- Segment doc pages live in `website/docs/segments/` and use MDX frontmatter with `title`, `sidebar_label`, and `id`.
+- Run `npm run start` inside `website/` for a local dev server.
+- Run `npm run build` inside `website/` to verify the site builds before opening a docs PR.
 
 ## PowerShell
 
-When editing PowerShell files (`*.ps1`, `*.psm1`, `*.psd1`):
+PowerShell helper scripts live in `packages/` and `build/`. Follow the `powershell` skill for cmdlet conventions.
 
-- Read `.github/instructions/powershell.md` and announce once per task that you are following it.
-- Follow PowerShell best practices for naming, formatting, and error handling.
-- Include comment-based help for public functions and ensure proper parameter validation.
+## Themes
 
-## Commit and Pull Requests Guidelines
-
-- Use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) for PR titles and commit messages.
-- The repository specific rules are in `.commitlintrc.json`.
-- Always run `gofmt` and `golangci-lint run` before submitting changes.
-- Limit commit message lines to a maximum of 200 characters.
-- **Do not commit initial plans or progress updates as separate commits.**
-  Include planning information in the PR description instead.
-
-Examples:
-
-- `feat(config): cache remote configs via HEAD check`
-- `fix(markdown): correct reference link syntax in docs`
-- `chore(ci): run golangci-lint in build step`
+Themes are plain JSON files in `themes/`. New themes must validate against
+`website/static/schema.json`. Do not introduce breaking schema changes without updating the
+schema file.

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   docs: [
     {
       type: "category",
@@ -62,6 +62,7 @@ module.exports = {
             "segments/cli/claude",
             "segments/cli/cmake",
             "segments/cli/copilot",
+            "segments/cli/copilot-cli",
             "segments/cli/deno",
             "segments/cli/docker",
             "segments/cli/firebase",
@@ -79,6 +80,7 @@ module.exports = {
             "segments/cli/react",
             "segments/cli/svelte",
             "segments/cli/talosctl",
+            "segments/cli/taskwarrior",
             "segments/cli/tauri",
             "segments/cli/terraform",
             "segments/cli/ui5tooling",
@@ -111,6 +113,7 @@ module.exports = {
           collapsed: true,
           items: [
             "segments/health/nightscout",
+            "segments/health/ramadan",
             "segments/health/strava",
             "segments/health/withings",
           ]
@@ -202,10 +205,11 @@ module.exports = {
           items: [
             "segments/web/brewfather",
             "segments/web/carbonintensity",
-            "segments/web/ipify",
             "segments/web/http",
+            "segments/web/ipify",
             "segments/web/nba",
             "segments/web/owm",
+            "segments/web/todoist",
             "segments/web/wakatime",
           ]
         },
@@ -231,6 +235,14 @@ module.exports = {
       collapsed: true,
       items: [
         "advanced/mcp-server",
+      ],
+    },
+    {
+      type: "category",
+      label: "🧪 Experimental",
+      collapsed: true,
+      items: [
+        "experimental/streaming",
       ],
     },
     "faq",

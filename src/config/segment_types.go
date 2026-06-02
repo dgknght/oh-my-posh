@@ -40,6 +40,8 @@ func init() {
 	gob.Register(&segments.CarbonIntensity{})
 	gob.Register(&segments.Cds{})
 	gob.Register(&segments.Copilot{})
+	gob.Register(&segments.CopilotCLI{})
+	gob.Register(&segments.CopilotCLIData{})
 	gob.Register(&segments.Cf{})
 	gob.Register(&segments.CfTarget{})
 	gob.Register(&segments.Claude{})
@@ -108,6 +110,7 @@ func init() {
 	gob.Register(&segments.Quasar{})
 	gob.Register(&segments.Package{})
 	gob.Register(&segments.R{})
+	gob.Register(&segments.Ramadan{})
 	gob.Register(&segments.React{})
 	gob.Register(&segments.Root{})
 	gob.Register(&segments.Ruby{})
@@ -126,10 +129,12 @@ func init() {
 	gob.Register(&segments.Swift{})
 	gob.Register(&segments.SystemInfo{})
 	gob.Register(&segments.TalosCTL{})
+	gob.Register(&segments.Taskwarrior{})
 	gob.Register(&segments.Tauri{})
 	gob.Register(&segments.Terraform{})
 	gob.Register(&segments.Text{})
 	gob.Register(&segments.Time{})
+	gob.Register(&segments.Todoist{})
 	gob.Register(&segments.UI5Tooling{})
 	gob.Register(&segments.Umbraco{})
 	gob.Register(&segments.Unity{})
@@ -200,6 +205,8 @@ const (
 	CONNECTION SegmentType = "connection"
 	// COPILOT writes GitHub Copilot usage statistics
 	COPILOT SegmentType = "copilot"
+	// COPILOTCLI writes GitHub Copilot CLI session information
+	COPILOTCLI SegmentType = "copilot_cli"
 	// CRYSTAL writes the active crystal version
 	CRYSTAL SegmentType = "crystal"
 	// DART writes the active dart version
@@ -302,6 +309,8 @@ const (
 	QUASAR SegmentType = "quasar"
 	// R version
 	R SegmentType = "r"
+	// RAMADAN displays Sehar and Iftar prayer times during Ramadan
+	RAMADAN SegmentType = "ramadan"
 	// REACT writes the current react version
 	REACT SegmentType = "react"
 	// ROOT writes root symbol
@@ -334,6 +343,8 @@ const (
 	SYSTEMINFO SegmentType = "sysinfo"
 	// TALOSCTL writes the talosctl context
 	TALOSCTL SegmentType = "talosctl"
+	// TASKWARRIOR writes Taskwarrior task counts and context
+	TASKWARRIOR SegmentType = "taskwarrior"
 	// Tauri Segment
 	TAURI SegmentType = "tauri"
 	// TERRAFORM writes the terraform workspace we're currently in
@@ -342,6 +353,8 @@ const (
 	TEXT SegmentType = "text"
 	// TIME writes the current timestamp
 	TIME SegmentType = "time"
+	// TODOIST segment
+	TODOIST SegmentType = "todoist"
 	// UI5 Tooling segment
 	UI5TOOLING SegmentType = "ui5tooling"
 	// UMBRACO writes the Umbraco version if Umbraco is present
@@ -396,6 +409,7 @@ var Segments = map[SegmentType]func() SegmentWriter{
 	CMAKE:           func() SegmentWriter { return &segments.Cmake{} },
 	CONNECTION:      func() SegmentWriter { return &segments.Connection{} },
 	COPILOT:         func() SegmentWriter { return &segments.Copilot{} },
+	COPILOTCLI:      func() SegmentWriter { return &segments.CopilotCLI{} },
 	CRYSTAL:         func() SegmentWriter { return &segments.Crystal{} },
 	DART:            func() SegmentWriter { return &segments.Dart{} },
 	DENO:            func() SegmentWriter { return &segments.Deno{} },
@@ -447,6 +461,7 @@ var Segments = map[SegmentType]func() SegmentWriter{
 	PYTHON:          func() SegmentWriter { return &segments.Python{} },
 	QUASAR:          func() SegmentWriter { return &segments.Quasar{} },
 	R:               func() SegmentWriter { return &segments.R{} },
+	RAMADAN:         func() SegmentWriter { return &segments.Ramadan{} },
 	REACT:           func() SegmentWriter { return &segments.React{} },
 	ROOT:            func() SegmentWriter { return &segments.Root{} },
 	RUBY:            func() SegmentWriter { return &segments.Ruby{} },
@@ -463,10 +478,12 @@ var Segments = map[SegmentType]func() SegmentWriter{
 	SWIFT:           func() SegmentWriter { return &segments.Swift{} },
 	SYSTEMINFO:      func() SegmentWriter { return &segments.SystemInfo{} },
 	TALOSCTL:        func() SegmentWriter { return &segments.TalosCTL{} },
+	TASKWARRIOR:     func() SegmentWriter { return &segments.Taskwarrior{} },
 	TAURI:           func() SegmentWriter { return &segments.Tauri{} },
 	TERRAFORM:       func() SegmentWriter { return &segments.Terraform{} },
 	TEXT:            func() SegmentWriter { return &segments.Text{} },
 	TIME:            func() SegmentWriter { return &segments.Time{} },
+	TODOIST:         func() SegmentWriter { return &segments.Todoist{} },
 	UI5TOOLING:      func() SegmentWriter { return &segments.UI5Tooling{} },
 	UMBRACO:         func() SegmentWriter { return &segments.Umbraco{} },
 	UNITY:           func() SegmentWriter { return &segments.Unity{} },
