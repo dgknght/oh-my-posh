@@ -94,7 +94,7 @@
             "always_enabled": true
           },
           "style": "diamond",
-          "template": " \uea6c ",
+          "template": " {{ if gt .Code 0 }}\uea6c{{ else }}\uf00c{{ end }} ",
           "trailing_diamond": "\ue0b0",
           "type": "status"
         }
